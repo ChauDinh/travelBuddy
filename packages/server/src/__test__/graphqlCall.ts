@@ -7,7 +7,7 @@ import Maybe from "graphql/tsutils/Maybe";
 interface Options {
   source: string;
   variableValues?: Maybe<{ [key: string]: any }>;
-  userId: number;
+  userId?: number;
 }
 
 let schema: GraphQLSchema;
