@@ -1,6 +1,7 @@
 import { graphql, GraphQLSchema } from "graphql";
 
 import { createSchema } from "../utils/createSchema";
+// @ts-ignore
 import Maybe from "graphql/tsutils/Maybe";
 
 interface Options {
