@@ -9,6 +9,7 @@ let connection: Connection;
 beforeAll(async () => {
   connection = await testConnection();
 });
+
 afterAll(async () => {
   await connection.close();
 });
@@ -16,11 +17,11 @@ afterAll(async () => {
 const registerMutation = `
   mutation Register($data: RegisterInput!){
     register(data: $data) {
-      id
-      firstName
-      lastName
-      name
       email
+      phone
+      postal
+      street
+      city
     }
   }
 `;
@@ -32,6 +33,10 @@ describe("Test Register", () => {
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
+      phone: faker.phone.phoneNumber(),
+      postal: faker.address.zipCode(),
+      street: faker.address.streetAddress(),
+      city: faker.address.city(),
     };
 
     const response = await grapqhlCall({
@@ -41,12 +46,16 @@ describe("Test Register", () => {
       },
     });
 
+    console.log("GRAPHQL REGISTER RESPONSE: ", response);
+
     expect(response).toMatchObject({
       data: {
         register: {
-          firstName: user.firstName,
-          lastName: user.lastName,
           email: user.email,
+          phone: user.phone,
+          postal: user.postal,
+          street: user.street,
+          city: user.city,
         },
       },
     });

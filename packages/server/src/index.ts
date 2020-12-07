@@ -63,10 +63,12 @@ const main = async () => {
     })
   );
 
+  // @ts-ignore
   const RedisStore = connectRedis(session);
 
   app.use(
     session({
+      // @ts-ignore
       store: new RedisStore({
         client: redis as any,
       }),

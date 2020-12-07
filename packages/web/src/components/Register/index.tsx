@@ -12,9 +12,11 @@ import {
 import { Formik } from "formik";
 
 import "./index.css";
+import { RegisterValidateSchemas } from "./RegisterValidateSchemas";
 
 interface FormValues {
-  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   phone?: string;
@@ -29,7 +31,8 @@ export const Register: React.FC<FormValues> = () => {
       <label className="register-title">Register</label>
       <Formik
         initialValues={{
-          username: "",
+          firstName: "",
+          lastName: "",
           email: "",
           password: "",
           phone: "",
@@ -38,132 +41,175 @@ export const Register: React.FC<FormValues> = () => {
           city: "",
         }}
         onSubmit={(values) => console.log(values)}
+        validationSchema={RegisterValidateSchemas}
       >
-        {({ isSubmitting, handleChange, handleSubmit, values, errors }) => (
-          <Form onSubmitCapture={handleSubmit}>
-            <label
-              className="input-group-label"
-              style={{ marginBottom: "10px !important" }}
-            >
-              Personal Information
-            </label>
-            <Form.Item
-              name="username"
-              rules={[
-                { required: true, message: "Please input your Username!" },
-              ]}
-            >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                name="username"
-                type="text"
-                placeholder="Username"
-                value={values.username}
-                onChange={handleChange}
-              />
-            </Form.Item>
-            <Form.Item
-              name="email"
-              rules={[{ required: true, message: "Please input your Email!" }]}
-            >
-              <Input
-                prefix={<MailOutlined className="site-form-item-icon" />}
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={values.email}
-                onChange={handleChange}
-              />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[
-                { required: true, message: "Please input your Password!" },
-              ]}
-            >
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={values.password}
-                onChange={handleChange}
-              />
-            </Form.Item>
-            <label className="input-group-label">Address (optional)</label>
-            <Form.Item name="phone" rules={[{ required: false }]}>
-              <Input
-                prefix={<PhoneOutlined className="site-form-item-icon" />}
-                name="phone"
-                type="text"
-                placeholder="Phone number"
-                value={values.phone}
-                onChange={handleChange}
-              />
-            </Form.Item>
-            <Form.Item name="street" rules={[{ required: false }]}>
-              <Input
-                prefix={<EnvironmentOutlined className="site-form-item-icon" />}
-                name="street"
-                type="text"
-                placeholder="Street"
-                value={values.street}
-                onChange={handleChange}
-              />
-            </Form.Item>
-            <Form.Item name="city" rules={[{ required: false }]}>
-              <Input
-                prefix={<GlobalOutlined className="site-form-item-icon" />}
-                name="city"
-                type="text"
-                placeholder="City"
-                value={values.city}
-                onChange={handleChange}
-              ></Input>
-            </Form.Item>
-            <Form.Item name="postal" rules={[{ required: false }]}>
-              <Input
-                prefix={<CompassOutlined className="site-form-item-icon" />}
-                name="postal"
-                type="text"
-                placeholder="Postal Code"
-                value={values.postal}
-                onChange={handleChange}
-              ></Input>
-            </Form.Item>
-            <Row>
-              <Col
-                span={12}
-                style={{ display: "flex", justifyContent: "flex-start" }}
+        {({
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+        }) => {
+          console.log(errors);
+          return (
+            <form onSubmit={handleSubmit}>
+              <label
+                className="input-group-label"
+                style={{ marginBottom: "10px !important" }}
               >
-                <Form.Item>
-                  <a className="login-form-forgot" href="/login">
-                    Already have account?
-                  </a>
-                </Form.Item>
-              </Col>
-              <Col
-                span={12}
-                style={{ display: "flex", justifyContent: "flex-end" }}
+                Personal Information
+              </label>
+              <Form.Item
+                help={
+                  touched.firstName && errors.firstName
+                    ? errors.firstName
+                    : null
+                }
               >
-                <Form.Item>
-                  <a className="login-form-forgot" href="/">
-                    Our terms of privacy
-                  </a>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
+                <Input
+                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  name="firstName"
+                  type="text"
+                  placeholder="First name"
+                  value={values.firstName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+              <Form.Item
+                help={
+                  touched.lastName && errors.lastName ? errors.lastName : null
+                }
               >
-                Register
-              </Button>
-            </Form.Item>
-          </Form>
-        )}
+                <Input
+                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  name="lastName"
+                  type="text"
+                  placeholder="Last name"
+                  value={values.lastName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+              <Form.Item
+                help={touched.email && errors.email ? errors.email : null}
+              >
+                <Input
+                  prefix={<MailOutlined className="site-form-item-icon" />}
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+              <Form.Item
+                help={
+                  touched.password && errors.password ? errors.password : null
+                }
+              >
+                <Input
+                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+              <label className="input-group-label">Address (optional)</label>
+              <Form.Item
+                help={touched.phone && errors.phone ? errors.phone : null}
+              >
+                <Input
+                  prefix={<PhoneOutlined className="site-form-item-icon" />}
+                  name="phone"
+                  type="text"
+                  placeholder="Phone number"
+                  value={values.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+              <Form.Item
+                help={touched.street && errors.street ? errors.street : null}
+              >
+                <Input
+                  prefix={
+                    <EnvironmentOutlined className="site-form-item-icon" />
+                  }
+                  name="street"
+                  type="text"
+                  placeholder="Street"
+                  value={values.street}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+              <Form.Item
+                help={touched.city && errors.city ? errors.city : null}
+              >
+                <Input
+                  prefix={<CompassOutlined className="site-form-item-icon" />}
+                  name="city"
+                  type="text"
+                  placeholder="City"
+                  value={values.city}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                ></Input>
+              </Form.Item>
+              <Form.Item
+                help={touched.postal && errors.postal ? errors.postal : null}
+              >
+                <Input
+                  prefix={<GlobalOutlined className="site-form-item-icon" />}
+                  name="postal"
+                  type="text"
+                  placeholder="Postal Code"
+                  value={values.postal}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                ></Input>
+              </Form.Item>
+              <Row>
+                <Col
+                  span={12}
+                  style={{ display: "flex", justifyContent: "flex-start" }}
+                >
+                  <Form.Item>
+                    <a className="login-form-forgot" href="/login">
+                      Already have account?
+                    </a>
+                  </Form.Item>
+                </Col>
+                <Col
+                  span={12}
+                  style={{ display: "flex", justifyContent: "flex-end" }}
+                >
+                  <Form.Item>
+                    <a className="login-form-forgot" href="/">
+                      Our terms of privacy
+                    </a>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                >
+                  Register
+                </Button>
+              </Form.Item>
+            </form>
+          );
+        }}
       </Formik>
     </div>
   );
