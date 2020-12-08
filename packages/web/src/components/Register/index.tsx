@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Row, Col } from "antd";
+import * as AntDesignElements from "antd";
 import {
   UserOutlined,
   LockOutlined,
@@ -11,11 +11,13 @@ import {
   SolutionOutlined,
   FlagOutlined,
 } from "@ant-design/icons";
-import { Formik } from "formik";
+import { Formik, Field, Form } from "formik";
 import { RegisterValidateSchemas } from "@abb/common";
 
 import "./index.css";
+import { InputField } from "../InputField";
 
+const { Form: AntDesignForm, Button, Row, Col } = AntDesignElements;
 interface FormValues {
   firstName: string;
   lastName: string;
@@ -30,7 +32,7 @@ interface FormValues {
 export const Register: React.FC<FormValues> = () => {
   return (
     <div className="register-container">
-      <label className="register-title">Register</label>
+      <label className="register-title">Create Account</label>
       <Formik
         initialValues={{
           firstName: "",
@@ -45,17 +47,9 @@ export const Register: React.FC<FormValues> = () => {
         onSubmit={(values) => console.log(values)}
         validationSchema={RegisterValidateSchemas}
       >
-        {({
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          errors,
-          touched,
-        }) => {
+        {({ handleSubmit }) => {
           return (
-            <form onSubmit={handleSubmit}>
+            <Form>
               <label
                 className="input-group-label"
                 style={{ marginBottom: "10px !important" }}
@@ -64,181 +58,99 @@ export const Register: React.FC<FormValues> = () => {
               </label>
               <br />
               <br />
-              <Form.Item
-                help={
-                  touched.firstName && errors.firstName
-                    ? errors.firstName
-                    : null
-                }
-                validateStatus={
-                  touched.firstName && errors.firstName ? "error" : "success"
-                }
-              >
-                <Input
-                  prefix={<UserOutlined className="site-form-item-icon" />}
-                  name="firstName"
-                  type="text"
-                  placeholder="First name"
-                  value={values.firstName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
-                help={
-                  touched.lastName && errors.lastName ? errors.lastName : null
-                }
-                validateStatus={
-                  touched.lastName && errors.lastName ? "error" : "success"
-                }
-              >
-                <Input
-                  prefix={<UserOutlined className="site-form-item-icon" />}
-                  name="lastName"
-                  type="text"
-                  placeholder="Last name"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
-                help={touched.email && errors.email ? errors.email : null}
-                validateStatus={
-                  touched.email && errors.email ? "error" : "success"
-                }
-              >
-                <Input
-                  prefix={<MailOutlined className="site-form-item-icon" />}
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
-                help={
-                  touched.password && errors.password ? errors.password : null
-                }
-                validateStatus={
-                  touched.password && errors.password ? "error" : "success"
-                }
-              >
-                <Input
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
+              <Field
+                name="firstName"
+                type="text"
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                component={InputField}
+                placeholder="First name"
+              />
+              <Field
+                name="lastName"
+                type="text"
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                component={InputField}
+                placeholder="Last name"
+              />
+              <Field
+                name="email"
+                type="email"
+                placeholder="Email"
+                prefix={<MailOutlined className="site-form-item-icon" />}
+                component={InputField}
+              />
+              <Field
+                name="password"
+                type="password"
+                placeholder="Password"
+                prefix={<LockOutlined className="site-form-item-icon" />}
+                component={InputField}
+              />
               <label className="input-group-label">
                 <FlagOutlined /> Address (optional)
               </label>
               <br />
               <br />
-              <Form.Item
-                help={touched.phone && errors.phone ? errors.phone : null}
-                validateStatus={
-                  touched.phone && errors.phone ? "error" : "success"
-                }
-              >
-                <Input
-                  prefix={<PhoneOutlined className="site-form-item-icon" />}
-                  name="phone"
-                  type="text"
-                  placeholder="Phone number"
-                  value={values.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
-                help={touched.street && errors.street ? errors.street : null}
-                validateStatus={
-                  touched.street && errors.street ? "error" : "success"
-                }
-              >
-                <Input
-                  prefix={
-                    <EnvironmentOutlined className="site-form-item-icon" />
-                  }
-                  name="street"
-                  type="text"
-                  placeholder="Street"
-                  value={values.street}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
-                help={touched.city && errors.city ? errors.city : null}
-                validateStatus={
-                  touched.city && errors.city ? "error" : "success"
-                }
-              >
-                <Input
-                  prefix={<CompassOutlined className="site-form-item-icon" />}
-                  name="city"
-                  type="text"
-                  placeholder="City"
-                  value={values.city}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                ></Input>
-              </Form.Item>
-              <Form.Item
-                help={touched.postal && errors.postal ? errors.postal : null}
-                validateStatus={
-                  touched.postal && errors.postal ? "error" : "success"
-                }
-              >
-                <Input
-                  prefix={<GlobalOutlined className="site-form-item-icon" />}
-                  name="postal"
-                  type="text"
-                  placeholder="Postal Code"
-                  value={values.postal}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                ></Input>
-              </Form.Item>
+              <Field
+                name="phone"
+                type="text"
+                placeholder="Phone number"
+                prefix={<PhoneOutlined className="site-form-item-icon" />}
+                component={InputField}
+              />
+              <Field
+                name="street"
+                type="text"
+                placeholder="Street"
+                prefix={<EnvironmentOutlined className="site-form-item-icon" />}
+                component={InputField}
+              />
+              <Field
+                name="city"
+                type="text"
+                placeholder="City"
+                prefix={<CompassOutlined className="site-form-item-icon" />}
+                component={InputField}
+              />
+              <Field
+                name="postal"
+                type="text"
+                placeholder="Postal Code"
+                prefix={<GlobalOutlined className="site-form-item-icon" />}
+                component={InputField}
+              />
               <Row>
                 <Col
                   span={12}
                   style={{ display: "flex", justifyContent: "flex-start" }}
                 >
-                  <Form.Item>
+                  <AntDesignForm.Item>
                     <a className="login-form-forgot" href="/login">
                       Already have account?
                     </a>
-                  </Form.Item>
+                  </AntDesignForm.Item>
                 </Col>
                 <Col
                   span={12}
                   style={{ display: "flex", justifyContent: "flex-end" }}
                 >
-                  <Form.Item>
+                  <AntDesignForm.Item>
                     <a className="login-form-forgot" href="/">
                       Our terms of privacy
                     </a>
-                  </Form.Item>
+                  </AntDesignForm.Item>
                 </Col>
               </Row>
-              <Form.Item>
+              <AntDesignForm.Item>
                 <Button
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
                 >
-                  Register
+                  Sign Up
                 </Button>
-              </Form.Item>
-            </form>
+              </AntDesignForm.Item>
+            </Form>
           );
         }}
       </Formik>
