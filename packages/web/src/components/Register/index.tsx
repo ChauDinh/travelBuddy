@@ -8,11 +8,13 @@ import {
   EnvironmentOutlined,
   CompassOutlined,
   GlobalOutlined,
+  SolutionOutlined,
+  FlagOutlined,
 } from "@ant-design/icons";
 import { Formik } from "formik";
+import { RegisterValidateSchemas } from "@abb/common";
 
 import "./index.css";
-import { RegisterValidateSchemas } from "./RegisterValidateSchemas";
 
 interface FormValues {
   firstName: string;
@@ -52,20 +54,24 @@ export const Register: React.FC<FormValues> = () => {
           errors,
           touched,
         }) => {
-          console.log(errors);
           return (
             <form onSubmit={handleSubmit}>
               <label
                 className="input-group-label"
                 style={{ marginBottom: "10px !important" }}
               >
-                Personal Information
+                <SolutionOutlined /> Personal Information
               </label>
+              <br />
+              <br />
               <Form.Item
                 help={
                   touched.firstName && errors.firstName
                     ? errors.firstName
                     : null
+                }
+                validateStatus={
+                  touched.firstName && errors.firstName ? "error" : "success"
                 }
               >
                 <Input
@@ -82,6 +88,9 @@ export const Register: React.FC<FormValues> = () => {
                 help={
                   touched.lastName && errors.lastName ? errors.lastName : null
                 }
+                validateStatus={
+                  touched.lastName && errors.lastName ? "error" : "success"
+                }
               >
                 <Input
                   prefix={<UserOutlined className="site-form-item-icon" />}
@@ -95,6 +104,9 @@ export const Register: React.FC<FormValues> = () => {
               </Form.Item>
               <Form.Item
                 help={touched.email && errors.email ? errors.email : null}
+                validateStatus={
+                  touched.email && errors.email ? "error" : "success"
+                }
               >
                 <Input
                   prefix={<MailOutlined className="site-form-item-icon" />}
@@ -110,6 +122,9 @@ export const Register: React.FC<FormValues> = () => {
                 help={
                   touched.password && errors.password ? errors.password : null
                 }
+                validateStatus={
+                  touched.password && errors.password ? "error" : "success"
+                }
               >
                 <Input
                   prefix={<LockOutlined className="site-form-item-icon" />}
@@ -121,9 +136,16 @@ export const Register: React.FC<FormValues> = () => {
                   onBlur={handleBlur}
                 />
               </Form.Item>
-              <label className="input-group-label">Address (optional)</label>
+              <label className="input-group-label">
+                <FlagOutlined /> Address (optional)
+              </label>
+              <br />
+              <br />
               <Form.Item
                 help={touched.phone && errors.phone ? errors.phone : null}
+                validateStatus={
+                  touched.phone && errors.phone ? "error" : "success"
+                }
               >
                 <Input
                   prefix={<PhoneOutlined className="site-form-item-icon" />}
@@ -137,6 +159,9 @@ export const Register: React.FC<FormValues> = () => {
               </Form.Item>
               <Form.Item
                 help={touched.street && errors.street ? errors.street : null}
+                validateStatus={
+                  touched.street && errors.street ? "error" : "success"
+                }
               >
                 <Input
                   prefix={
@@ -152,6 +177,9 @@ export const Register: React.FC<FormValues> = () => {
               </Form.Item>
               <Form.Item
                 help={touched.city && errors.city ? errors.city : null}
+                validateStatus={
+                  touched.city && errors.city ? "error" : "success"
+                }
               >
                 <Input
                   prefix={<CompassOutlined className="site-form-item-icon" />}
@@ -165,6 +193,9 @@ export const Register: React.FC<FormValues> = () => {
               </Form.Item>
               <Form.Item
                 help={touched.postal && errors.postal ? errors.postal : null}
+                validateStatus={
+                  touched.postal && errors.postal ? "error" : "success"
+                }
               >
                 <Input
                   prefix={<GlobalOutlined className="site-form-item-icon" />}
