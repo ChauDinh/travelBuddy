@@ -21,6 +21,10 @@ const meQuery = `
       lastName
       name
       email
+      phone
+      postal
+      street
+      city
     }
   }
 `;
@@ -32,6 +36,10 @@ describe("Me Query", () => {
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
+      phone: faker.phone.phoneNumber(),
+      postal: faker.address.zipCode(),
+      street: faker.address.streetAddress(),
+      city: faker.address.city(),
     }).save();
 
     const response = await grapqhlCall({
@@ -47,6 +55,10 @@ describe("Me Query", () => {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
+          phone: user.phone,
+          postal: user.postal,
+          street: user.street,
+          city: user.city,
         },
       },
     });

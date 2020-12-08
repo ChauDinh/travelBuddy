@@ -30,4 +30,20 @@ export class User extends BaseEntity {
 
   @Column("bool", { default: false })
   confirmed: boolean;
+
+  @Field()
+  @Column({ nullable: true })
+  phone: string;
+
+  @Field()
+  @Column({ nullable: true })
+  street: string;
+
+  @Field()
+  @Column({ nullable: true })
+  postal: string;
+
+  @Field()
+  @Column({ nullable: true })
+  city: string;
 }

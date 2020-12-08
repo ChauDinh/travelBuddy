@@ -32,8 +32,8 @@ export class LoginResolver {
     }
 
     // TODO: Access the context and send user back a cookie
-    // @ts-ignore
-    ctx.req.session.userId = user.id;
+
+    ctx.req.session!.userId = user.id;
 
     return user;
   }

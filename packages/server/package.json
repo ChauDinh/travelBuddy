@@ -1,5 +1,5 @@
 {
-  "name": "ts-server",
+  "name": "@abb/ts-server",
   "version": "0.1.0",
   "description": "A CRUD server written by TypeScript and GraphQL",
   "main": "src/index.js",
